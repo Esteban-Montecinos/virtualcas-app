@@ -12,33 +12,33 @@ const Main = () => {
   const navigate = useNavigate();
   const [usuarioDeFirebase, setUsuarioDeFirebase] = useState(null);
   const [usuario, setUsuario] = useState(null);
-  
 
   onAuthStateChanged(auth, (usuarioFirebase) => {
     if (usuarioFirebase) {
       //código en caso de que haya sesión inciiada
-      setUsuarioDeFirebase(usuarioFirebase);
-      async function obtenerDatosUsuario(datos) {
-        try {
-
-          const docuRef = doc(firestore, `Users/${datos.email}`);
-          const consulta = await getDoc(docuRef);
-          if (consulta.exists()) {
-            //si existen datos
-            const infoDocu = consulta.data();
-            setUsuario(infoDocu);
-            navigate("/home");
+      if (usuario == null) {
+        setUsuarioDeFirebase(usuarioFirebase);
+        async function obtenerDatosUsuario(datos) {
+          try {
+            const docuRef = doc(firestore, `Users/${datos.email}`);
+            const consulta = await getDoc(docuRef);
+            if (consulta.exists()) {
+              //si existen datos
+              const infoDocu = consulta.data();
+              setUsuario(infoDocu);
+              navigate("/home");
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
         }
-      }
 
-      obtenerDatosUsuario(usuarioDeFirebase);
-      
+        obtenerDatosUsuario(usuarioDeFirebase);
+      }
     } else {
       //código en caso de que no haya sesión iniciada
       setUsuarioDeFirebase(null);
+      setUsuario(null);
     }
   });
   return (

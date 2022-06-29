@@ -13,7 +13,6 @@ const initialValues = {
 };
 
 const FormikImputValue = ({ name, ...props }) => {
-  
   const [field, meta, helpers] = useField(name);
   return (
     <TextInput
@@ -36,7 +35,7 @@ const Login = () => {
         <Formik
           validationSchema={loginValidationSchema}
           initialValues={initialValues}
-          onSubmit={(values) => {
+          onSubmit={(datos) => {
             async function login(datos) {
               try {
                 const user = await signInWithEmailAndPassword(
@@ -44,13 +43,12 @@ const Login = () => {
                   datos.email,
                   datos.password
                 );
-                
               } catch (error) {
                 console.log(error);
               }
             }
       
-            login(values);
+            login(datos);
           }}
         >
           {({ handleSubmit }) => {
