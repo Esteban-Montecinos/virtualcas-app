@@ -1,16 +1,19 @@
 import React from "react";
 import { Text, View, StyleSheet, TextInput, Alert } from "react-native";
-import { useNavigate } from "react-router-dom";
 import { Formik, useField } from "formik";
 import ButtonGradient from "../styleButton/ButtonGradient";
 import { loginValidationSchema } from "../validationSchemas/login";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import bd from "../../firebase/firebaseconfig";
 
+const auth = getAuth(bd);
 const initialValues = {
   email: "",
   password: "",
 };
 
 const FormikImputValue = ({ name, ...props }) => {
+  
   const [field, meta, helpers] = useField(name);
   return (
     <TextInput
@@ -22,7 +25,7 @@ const FormikImputValue = ({ name, ...props }) => {
   );
 };
 const Login = () => {
-    const navigate = useNavigate();
+  
   return (
     <View style={styles.mainContainer}>
       <View style={styles.container}>
@@ -33,7 +36,22 @@ const Login = () => {
         <Formik
           validationSchema={loginValidationSchema}
           initialValues={initialValues}
-          onSubmit={(values) => console.log(Alert.alert(values.email))}
+          onSubmit={(values) => {
+            async function login(datos) {
+              try {
+                const user = await signInWithEmailAndPassword(
+                  auth,
+                  datos.email,
+                  datos.password
+                );
+                
+              } catch (error) {
+                console.log(error);
+              }
+            }
+      
+            login(values);
+          }}
         >
           {({ handleSubmit }) => {
             return (

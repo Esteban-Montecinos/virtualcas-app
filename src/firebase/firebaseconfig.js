@@ -4,13 +4,13 @@ import { getFirestore } from "firebase/firestore";
 // import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey:process.env.REACT_APP_FIREBASE_APIKEY,
-  authDomain:process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
-  projectId:process.env.REACT_APP_FIREBASE_PROJECTID,
-  storageBucket:process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
-  messagingSenderId:process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
-  appId:process.env.REACT_APP_FIREBASE_APPID,
-  measurementId:process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID
+  apiKey: "AIzaSyDQlBD0VjeUlX7eCtUNLoQbYbSIIWnS-b4",
+  authDomain: "vcasino-f9a8d.firebaseapp.com",
+  projectId: "vcasino-f9a8d",
+  storageBucket: "vcasino-f9a8d.appspot.com",
+  messagingSenderId: "821897936292",
+  appId: "1:821897936292:web:d9188aaf9edcb93e84d531",
+  measurementId: "G-Z020RVDGK6"
 };
 
 // Initialize Firebase

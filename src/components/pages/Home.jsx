@@ -1,9 +1,9 @@
 import React from 'react'
 import { Text } from 'react-native'
 
-const Home = () => {
+const Home = ({usuario}) => {
   return (
-    <Text>Home</Text>
+    <Text>{usuario.NombreCompleto}</Text>
   )
 }
 
