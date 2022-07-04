@@ -1,12 +1,17 @@
-import { NativeRouter } from 'react-router-native';
-import Main from './src/components/Main';
-
-
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createDrawerNavigator} from '@react-navigation/drawer'
+import Login from "./src/components/pages/Login";
+import Main from './src/components/pages/Main';
+const Stack = createNativeStackNavigator();
 export default function App() {
   
   return (
-    <NativeRouter style={{flex: 1}}>
-      <Main/>
-    </NativeRouter>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Main" component={Main} />
+    </Stack.Navigator>
+    </NavigationContainer>
   );
 }

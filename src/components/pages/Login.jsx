@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, StyleSheet, TextInput, Alert } from "react-native";
 import { Formik, useField } from "formik";
-import ButtonGradient from "../styleButton/ButtonGradient";
 import { loginValidationSchema } from "../validationSchemas/login";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import ButtonGradient from "../styleButton/ButtonGradient";
 import bd from "../../firebase/firebaseconfig";
+import { useNavigation } from "@react-navigation/native";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 const auth = getAuth(bd);
+const firestore = getFirestore(bd);
 const initialValues = {
   email: "",
   password: "",
@@ -24,7 +27,8 @@ const FormikImputValue = ({ name, ...props }) => {
   );
 };
 const Login = () => {
-  
+  const [usuario, setUsuario] = useState(null);
+  const navigation = useNavigation();
   return (
     <View style={styles.mainContainer}>
       <View style={styles.container}>
@@ -43,11 +47,20 @@ const Login = () => {
                   datos.email,
                   datos.password
                 );
+                const docuRef = doc(firestore, `Users/${datos.email}`);
+                const consulta = await getDoc(docuRef);
+                if (consulta.exists()) {
+                  //si existen datos
+                  const infoDocu = consulta.data();
+                  setUsuario(infoDocu);
+                  console.log("aqui-----" + usuario);
+                  navigation.navigate("Main", { usuario: infoDocu });
+                }
               } catch (error) {
                 console.log(error);
               }
             }
-      
+
             login(datos);
           }}
         >
