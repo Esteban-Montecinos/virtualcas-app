@@ -39,7 +39,7 @@ const Login = () => {
         <Formik
           validationSchema={loginValidationSchema}
           initialValues={initialValues}
-          onSubmit={(datos) => {
+          onSubmit={(datos, { resetForm }) => {
             async function login(datos) {
               try {
                 const user = await signInWithEmailAndPassword(
@@ -54,9 +54,11 @@ const Login = () => {
                   const infoDocu = consulta.data();
                   setUsuario(infoDocu);
                   console.log("aqui-----" + usuario);
+                  resetForm();
                   navigation.navigate("Main", { usuario: infoDocu });
                 }
               } catch (error) {
+                resetForm();
                 console.log(error);
               }
             }
@@ -69,7 +71,7 @@ const Login = () => {
               <>
                 <FormikImputValue placeholder="Correo" name="email" />
                 <FormikImputValue
-                  placeholder="Password"
+                  placeholder="Contraseña"
                   name="password"
                   secureTextEntry={true}
                 />

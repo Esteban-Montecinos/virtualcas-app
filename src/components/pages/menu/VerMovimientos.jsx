@@ -1,9 +1,13 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
+import Constants from 'expo-constants'
 
 const VerMovimientos = () => {
   return (
-    <Text>VerMovimientos</Text>
+    <View style={{marginTop: Constants.statusBarHeight}}>
+
+      <Text>VerMovimientos</Text>
+    </View>
   )
 }
 

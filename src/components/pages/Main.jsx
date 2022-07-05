@@ -17,6 +17,7 @@ import Cuenta from "./menu/Cuenta";
 const Tab = createBottomTabNavigator();
 const Main = () => {
   const route = useRoute();
+  const {usuario} = route.params
   return (
     
       <Tab.Navigator
@@ -39,7 +40,7 @@ const Main = () => {
                 break;
 
             }
-            return <MaterialIcons name={iconName} size={size} color={color} />
+            return <MaterialIcons name={iconName} size={30} color={color} />
 
           }
         })
@@ -49,7 +50,7 @@ const Main = () => {
         <Tab.Screen options={{tabBarLabel: 'Inicio',title: 'Inicio'}} name="Home" component={Home} />
         <Tab.Screen options={{tabBarLabel: 'Codigo QR', title: 'Codigo QR'}} name="QrCode" component={QrCode} />
         <Tab.Screen options={{tabBarLabel: 'Ver Movimientos', title:'Ver Movimientos'}} name="VerMovimientos" component={VerMovimientos} />
-        <Tab.Screen options={{tabBarLabel: 'Cuenta'}} name="Cuenta" component={Cuenta} />
+        <Tab.Screen options={{tabBarLabel: 'Cuenta'}} initialParams={{usuario}} name="Cuenta" component={Cuenta} pa/>
       </Tab.Navigator>
   
   );

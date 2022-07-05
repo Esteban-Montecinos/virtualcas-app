@@ -1,9 +1,13 @@
 import React from 'react'
-import { Text } from 'react-native'
+import Constants  from 'expo-constants'
+import { Text, View } from 'react-native'
 
-const QrCode = () => {
+const QrCode = ({route}) => {
   return (
-    <Text>QrCode</Text>
+    <View style={{marginTop: Constants.statusBarHeight}}>
+      <Text>QrCode</Text>
+
+    </View>
   )
 }
 

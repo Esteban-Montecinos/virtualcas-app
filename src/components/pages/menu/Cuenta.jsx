@@ -1,14 +1,14 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
+import { View, Text } from 'react-native'
+import React from 'react'
+import Constants  from 'expo-constants';
 
-export class Cuenta extends Component {
-  render() {
-    return (
-      <View>
-        <Text>Cuenta</Text>
-      </View>
-    )
-  }
+const Cuenta = ({route}) => {
+  return (
+    <View style={{marginTop: Constants.statusBarHeight}}>
+      <Text>Cuenta </Text>
+      <Text>Hola: {route.params.usuario.NombreCompleto}</Text>
+    </View>
+  )
 }
 
 export default Cuenta
