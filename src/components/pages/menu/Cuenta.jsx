@@ -2,13 +2,12 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import Constants from "expo-constants";
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
-import bd from "../../../firebase/firebaseconfig";
+import {auth} from "../../../firebase/firebaseconfig";
 
 const Cuenta = ({ route }) => {
   const navigation = useNavigation();
-  const auth = getAuth(bd);
   const cerrarSesion = () => {
     signOut(auth);
     navigation.navigate("Login");

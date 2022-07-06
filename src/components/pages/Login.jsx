@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet, TextInput, Alert } from "react-native";
 import { Formik, useField } from "formik";
 import { loginValidationSchema } from "../validationSchemas/login";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import ButtonGradient from "../styleButton/ButtonGradient";
-import bd from "../../firebase/firebaseconfig";
+import {app, auth} from "../../firebase/firebaseconfig";
 import { useNavigation } from "@react-navigation/native";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 
-const auth = getAuth(bd);
-const firestore = getFirestore(bd);
+const firestore = getFirestore(app);
 const initialValues = {
   email: "",
   password: "",
