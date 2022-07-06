@@ -1,27 +1,34 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View,StyleSheet } from "react-native";
 import Constants  from 'expo-constants'
-import { getAuth, signOut } from "firebase/auth";
-import { useNavigation } from '@react-navigation/native';
-import bd from "../../../firebase/firebaseconfig";
-import ButtonGradient from "../../styleButton/ButtonGradient";
 
 
-const Home = () => {
-  const navigation = useNavigation();
-  const auth = getAuth(bd);
-  const cerrarSesion = () => {
-    signOut(auth);
-    navigation.navigate('Login');
-  };
+const Home = ({route}) => {
+  const { usuario, email } = route.params;
   return (
-    <View style={{marginTop: Constants.statusBarHeight}}>
-      
-      <Text>hola</Text>
-
-      <ButtonGradient text="cerrar" onPress={cerrarSesion} />
+    <View style={styles.container}>
+      <View>
+        <Text>Nombre Apellido: {usuario.NombreCompleto}</Text>
+        <Text>Empresa: </Text>
+        <Text>Puesto: {usuario.Puesto}</Text>
+        <Text>Horario: {usuario.TipoH}</Text>
+        <Text>Estado: {usuario.Estado}</Text>
+      </View>
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {
+    marginTop: Constants.statusBarHeight,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text:{
+    fontSize: 20,
+    padding:5,
+    marginBottom:5,
+    textAlign: "center"
+  }
+});
 export default Home;

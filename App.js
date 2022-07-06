@@ -3,10 +3,20 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "./src/components/pages/Login";
 import Main from './src/components/pages/Main';
 const Stack = createNativeStackNavigator();
+const MyTheme = {
+  dark: false,
+  colors: {
+    primary: '#8e44ad',
+    background: '#f1f1f1',
+    card: '#ecf0f1',
+    text: '#7f8c8d',
+    border: '#f1f1f1',
+  }
+};
 export default function App() {
   
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Main" component={Main} />

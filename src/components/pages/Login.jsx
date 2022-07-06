@@ -55,7 +55,7 @@ const Login = () => {
                   setUsuario(infoDocu);
                   console.log("aqui-----" + usuario);
                   resetForm();
-                  navigation.navigate("Main", { usuario: infoDocu });
+                  navigation.navigate("Main", { usuario: infoDocu, email: datos.email});
                 }
               } catch (error) {
                 resetForm();
@@ -76,7 +76,7 @@ const Login = () => {
                   secureTextEntry={true}
                 />
                 <ButtonGradient
-                  text={"Iniciar sesion"}
+                  text={"Iniciar sesión"}
                   onPress={handleSubmit}
                 />
               </>
