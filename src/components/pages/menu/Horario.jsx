@@ -2,10 +2,11 @@ import { View, Text, StyleSheet } from 'react-native'
 import  Constants  from 'expo-constants'
 import React from 'react'
 
-const Horario = () => {
+const Horario = ({route}) => {
+  const { usuario, email } = route.params;
   return (
     <View style={styles.container}>
-      <Text>Horario</Text>
+      <Text>Horario: {usuario.Horario}</Text>
     </View>
   )
 }
