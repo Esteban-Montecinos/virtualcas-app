@@ -9,7 +9,7 @@ const Home = ({route}) => {
     <View style={styles.container}>
       <View>
         <Text>Nombre Apellido: {usuario.NombreCompleto}</Text>
-        <Text>Empresa: </Text>
+        <Text>Empresa: {usuario.Nempresa}</Text>
         <Text>Puesto: {usuario.Puesto}</Text>
         <Text>Horario: {usuario.TipoH}</Text>
         <Text>Estado: {usuario.Estado}</Text>
