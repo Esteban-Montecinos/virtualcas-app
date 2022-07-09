@@ -1,12 +1,5 @@
 import React from "react";
 import { useRoute } from "@react-navigation/native";
-import {
-  Text,
-  View,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./menu/Home";
@@ -81,16 +74,5 @@ const Main = () => {
     </Tab.Navigator>
   );
 };
-const styele = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  text: {
-    color: "#161924",
-    fontSize: 20,
-    fontWeight: "500",
-  },
-});
 
 export default Main;

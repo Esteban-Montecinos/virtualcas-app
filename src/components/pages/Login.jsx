@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, View, StyleSheet, TextInput, Alert } from "react-native";
 import { Formik, useField } from "formik";
 import { loginValidationSchema } from "../validationSchemas/login";
@@ -26,7 +26,6 @@ const FormikImputValue = ({ name, ...props }) => {
   );
 };
 const Login = () => {
-  const [usuario, setUsuario] = useState(null);
   const navigation = useNavigation();
   return (
     <View style={styles.mainContainer}>
@@ -51,10 +50,12 @@ const Login = () => {
                 if (consulta.exists()) {
                   //si existen datos
                   const infoDocu = consulta.data();
-                  setUsuario(infoDocu);
-                  console.log("aqui-----" + usuario);
                   resetForm();
-                  navigation.navigate("Main", { usuario: infoDocu, email: datos.email});
+                  if(infoDocu.Tipo == "Trabajador"){
+                    navigation.navigate("Main", { usuario: infoDocu, email: datos.email});
+                  }else if(infoDocu.Tipo == "Casino"){
+                    navigation.navigate("MainCasino", { usuario: infoDocu, email: datos.email});
+                  }
                 }
               } catch (error) {
                 resetForm();

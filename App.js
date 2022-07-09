@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "./src/components/pages/Login";
 import Main from './src/components/pages/Main';
+import MainCasino from './src/components/pages/MainCasino';
 const Stack = createNativeStackNavigator();
 const MyTheme = {
   dark: false,
@@ -20,6 +21,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Main" component={Main} />
+      <Stack.Screen name="MainCasino" component={MainCasino} />
     </Stack.Navigator>
     </NavigationContainer>
   );
