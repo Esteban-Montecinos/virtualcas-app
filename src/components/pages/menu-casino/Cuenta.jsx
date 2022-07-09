@@ -21,7 +21,7 @@ const Cuenta = ({ route }) => {
         <Ionicons name="person-circle-outline" size={80} color="#000" />
         <View>
           <Text style={styles.label}>Nombre Apellido</Text>
-          <Text styles={styles.text}>{usuario.NombreCompleto}</Text>
+          <Text styles={styles.text}>{usuario.NombreC}</Text>
         </View>
       </View>
       <View style={styles.buttonContainer}>
@@ -32,7 +32,7 @@ const Cuenta = ({ route }) => {
 
       <View styles={styles.textContainer}>
         <Text style={styles.label}>Nombre Apellido</Text>
-        <Text styles={styles.text}>{usuario.NombreCompleto}</Text>
+        <Text styles={styles.text}>{usuario.NombreCo}</Text>
       </View>
       <View styles={styles.textContainer}>
         <Text style={styles.label}>Rut</Text>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Text, View, StyleSheet, TextInput, Alert } from "react-native";
 import { Formik, useField } from "formik";
 import { loginValidationSchema } from "../validationSchemas/login";
@@ -26,6 +26,7 @@ const FormikImputValue = ({ name, ...props }) => {
   );
 };
 const Login = () => {
+  const [ error , setError] = useState(null);
   const navigation = useNavigation();
   return (
     <View style={styles.mainContainer}>
@@ -58,8 +59,9 @@ const Login = () => {
                   }
                 }
               } catch (error) {
-                resetForm();
-                console.log(error);
+                //resetForm();
+                setError(error);
+                console.log(error)
               }
             }
 

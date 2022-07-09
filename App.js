@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "./src/components/pages/Login";
 import Main from './src/components/pages/Main';
 import MainCasino from './src/components/pages/MainCasino';
+
 const Stack = createNativeStackNavigator();
 const MyTheme = {
   dark: false,
