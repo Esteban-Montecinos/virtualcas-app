@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Button, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
 import tw from "twrnc";
@@ -24,7 +24,7 @@ const Home = ({ route }) => {
       ]}
     >
       <View
-        style={tw`p-6 max-w-sm min-w-85 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700`}
+        style={tw`p-6 max-w-90 min-w-85 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700`}
       >
         <Text
           style={tw`mb-2 uppercase  text-2xl font-bold tracking-tight text-gray-900 dark:text-white`}

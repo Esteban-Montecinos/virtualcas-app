@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import Constants from "expo-constants";
 import { signOut } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import {auth} from "../../../firebase/firebaseconfig";
-
+import tw from "twrnc";
 
 const Cuenta = ({ route }) => {
   const navigation = useNavigation();
@@ -15,77 +15,58 @@ const Cuenta = ({ route }) => {
   };
   const { usuario, email } = route.params;
   return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Mi cuenta</Text>
-      <View style={styles.cardIcon}>
-        <Ionicons name="person-circle-outline" size={80} color="#000" />
-        <View>
-          <Text style={styles.label}>Nombre Apellido</Text>
-          <Text styles={styles.text}>{usuario.NombreC}</Text>
+    <View
+      style={[
+        { marginTop: Constants.statusBarHeight },
+        tw`flex h-full justify-center items-center bg-slate-100`,
+      ]}
+    >
+      <View
+        style={tw`max-w-90 min-w-80 rounded-xl bg-white dark:bg-gray-800 shadow-xl p-6`}
+      >
+        <View style={tw`items-center justify-center`}>
+        <Text
+          style={tw`mb-2 uppercase  text-xl font-bold tracking-tight text-gray-500 dark:text-white`}
+        >
+          Mi cuenta
+        </Text>
+          <Ionicons name="person-circle-outline" size={80} color="#000" />
+          <View>
+            <Text style={tw`text-gray-800 uppercase dark:text-white font-bold`}>
+              {usuario.NombreC}
+            </Text>
+            <Text style={tw`text-gray-500 uppercase font-bold`}>{usuario.Puesto}</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={cerrarSesion}>
-          <Text style={styles.cerrar}>Cerrar Sesión</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View styles={styles.textContainer}>
-        <Text style={styles.label}>Nombre Apellido</Text>
-        <Text styles={styles.text}>{usuario.NombreCo}</Text>
-      </View>
-      <View styles={styles.textContainer}>
-        <Text style={styles.label}>Rut</Text>
-        <Text styles={styles.text}>{usuario.Rut}</Text>
-      </View>
-      <View styles={styles.textContainer}>
-        <Text style={styles.label}>Fecha ingreso</Text>
-        <Text styles={styles.text}>{usuario.fecha}</Text>
-      </View>
-      <View styles={styles.textContainer}>
-        <Text style={styles.label}>Telefono móvil</Text>
-        <Text styles={styles.text}>{usuario.Fono}</Text>
+        <View style={tw`border-b border-gray-400 pt-2`} />
+        <Text style={tw`text-gray-500 font-bold`}>Turno</Text>
+        <Text styles={tw`font-normal text-lg text-gray-700 dark:text-gray-400`}>
+          {usuario.TipoH}
+        </Text>
+        <View style={tw`border-b border-gray-400 pt-2`} />
+        <Text style={tw`text-gray-500 font-bold`}>Rut</Text>
+        <Text styles={tw`font-normal text-lg text-gray-700 dark:text-gray-400`}>
+          {usuario.Rut}
+        </Text>
+        <View style={tw`border-b border-gray-400 pt-2`} />
+        <Text style={tw`text-gray-500 font-bold`}>Fecha ingreso</Text>
+        <Text styles={tw`font-normal text-lg text-gray-700 dark:text-gray-400`}>
+          {usuario.fecha}
+        </Text>
+        <View style={tw`border-b border-gray-400 pt-2`} />
+        <Text style={tw`text-gray-500 font-bold`}>Telefono móvil</Text>
+        <Text styles={tw`font-normal text-lg text-gray-700 dark:text-gray-400`}>
+          {usuario.Fono}
+        </Text>
+        <View style={tw`border-b border-gray-400 pt-2`} />
+        <View style={tw`flex justify-center items-center`}>
+          <TouchableOpacity style={tw`bg-red-500 py-2 px-4 rounded mt-5`} onPress={cerrarSesion}>
+            <Text style={tw`text-white font-bold`}>Cerrar Sesión</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    marginTop: Constants.statusBarHeight,
-    flex: 1,
-    justifyContent: "center",
-    marginHorizontal: 20,
-  },
-  cardIcon: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  buttonContainer: {
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: "#34434D",
-    marginBottom: 20,
-  },
-  button: {
-    alignItems: "center",
-    padding: 10,
-  },
-  titulo: {
-    fontSize: 42,
-    color: "#34434D",
-    fontWeight: "bold",
-    alignSelf: "center",
-  },
-  textContainer: {
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: "black",
-  },
-  cerrar: {
-    color: "red",
-  },
-});
 
 export default Cuenta
