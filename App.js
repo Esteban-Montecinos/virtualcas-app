@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator();
 const MyTheme = {
   dark: false,
   colors: {
-    primary: '#8e44ad',
+    primary: '#8b5cf6',
     background: '#f1f1f1',
     card: '#ecf0f1',
     text: '#7f8c8d',

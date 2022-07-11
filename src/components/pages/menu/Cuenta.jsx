@@ -5,6 +5,7 @@ import Constants from "expo-constants";
 import { signOut } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import {auth} from "../../../firebase/firebaseconfig";
+import tw from "twrnc";
 
 const Cuenta = ({ route }) => {
   const navigation = useNavigation();
@@ -14,36 +15,14 @@ const Cuenta = ({ route }) => {
   };
   const { usuario, email } = route.params;
   return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Mi cuenta</Text>
-      <View style={styles.cardIcon}>
-        <Ionicons name="person-circle-outline" size={80} color="#000" />
-        <View>
-          <Text style={styles.label}>Nombre Apellido</Text>
-          <Text styles={styles.text}>{usuario.NombreC}</Text>
-        </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={cerrarSesion}>
-          <Text style={styles.cerrar}>Cerrar Sesión</Text>
-        </TouchableOpacity>
-      </View>
+    <View style={[
+      { marginTop: Constants.statusBarHeight },
+      tw`flex h-full justify-center items-center bg-slate-100`,
+    ]}>
+      <View tyle={tw`w-3/4 h-70 rounded-xl bg-white dark:bg:gray-800 shadow-md p-3 flex`}>
+        <View style={tw`flex flex-row items-center`}>
 
-      <View styles={styles.textContainer}>
-        <Text style={styles.label}>Nombre Apellido</Text>
-        <Text styles={styles.text}>{usuario.NombreC}</Text>
-      </View>
-      <View styles={styles.textContainer}>
-        <Text style={styles.label}>Rut</Text>
-        <Text styles={styles.text}>{usuario.Rut}</Text>
-      </View>
-      <View styles={styles.textContainer}>
-        <Text style={styles.label}>Fecha ingreso</Text>
-        <Text styles={styles.text}>{usuario.fecha}</Text>
-      </View>
-      <View styles={styles.textContainer}>
-        <Text style={styles.label}>Telefono móvil</Text>
-        <Text styles={styles.text}>{usuario.Fono}</Text>
+        </View>
       </View>
     </View>
   );

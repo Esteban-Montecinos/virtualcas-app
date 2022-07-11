@@ -71,7 +71,7 @@ const Login = () => {
           {({ handleSubmit }) => {
             return (
               <>
-                <FormikImputValue placeholder="Correo" name="email" />
+                <FormikImputValue placeholder="Correo" name="email" keyboardType="email-address"/>
                 <FormikImputValue
                   placeholder="Contraseña"
                   name="password"
