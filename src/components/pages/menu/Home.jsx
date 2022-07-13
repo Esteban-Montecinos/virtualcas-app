@@ -1,11 +1,13 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
 import tw from "twrnc";
 import { useNavigation } from "@react-navigation/native";
+import {app} from "../../../firebase/firebaseconfig";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
-
+const firestore = getFirestore(app);
 
 const Home = ({ route }) => {
   const navigation = useNavigation();
@@ -15,6 +17,20 @@ const Home = ({ route }) => {
   }
   const handleToMovimiento = ()=>{
     navigation.navigate("VerMovimientos");
+  }
+  async function trabajadorScaneado(emailTrabajador) {
+    try {
+      
+      const docuRef = doc(firestore, `Users/${emailTrabajador}`);
+      const consulta = await getDoc(docuRef);
+      if (consulta.exists()) {
+        //si existen datos
+        const infoDocu = consulta.data();
+        
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
   return (
     <View

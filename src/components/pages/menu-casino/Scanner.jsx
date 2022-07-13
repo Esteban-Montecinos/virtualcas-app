@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { View, Text,StyleSheet, Button } from 'react-native';
+import { View, Text,StyleSheet, Button, Vibration } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import Constants from "expo-constants";
 import { runOnJS } from 'react-native-reanimated/lib/reanimated2/core';
@@ -38,7 +38,8 @@ const Scanner = ({ route }) => {
           alert(`Dia de hoy ${nombreDia}`);
           console.log("Nombre : ", infoDocu);
         }else{
-          alert('');
+          Vibration.vibrate(1500);
+          alert('Ticket ya utilizado');
         }
       }
     } catch (error) {
