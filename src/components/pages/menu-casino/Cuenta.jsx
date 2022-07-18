@@ -26,7 +26,7 @@ const Cuenta = ({ route }) => {
       >
         <View style={tw`items-center justify-center`}>
         <Text
-          style={tw`mb-2 uppercase  text-xl font-bold tracking-tight text-gray-500 dark:text-white`}
+          style={tw`mb-2 uppercase  text-xl font-bold tracking-tight text-gray-700 dark:text-white`}
         >
           Mi cuenta
         </Text>

@@ -1,65 +1,63 @@
-import React, {useState, useEffect} from "react";
-import { View, Text,StyleSheet, Button, Vibration } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, Button, Vibration } from "react-native";
+import { BarCodeScanner } from "expo-barcode-scanner";
 import Constants from "expo-constants";
-import { runOnJS } from 'react-native-reanimated/lib/reanimated2/core';
-import {app} from "../../../firebase/firebaseconfig";
+import { runOnJS } from "react-native-reanimated/lib/reanimated2/core";
+import { app } from "../../../firebase/firebaseconfig";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-
+import tw from "twrnc";
 const firestore = getFirestore(app);
 
 const Scanner = ({ route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const { usuario, email } = route.params;
-  const nombreDelDiaSegunFecha = dia => [
-    'Domingo',
-    'Lunes',
-    'Martes',
-    'Miercoles',
-    'Jueves',
-    'Viernes',
-    'Sabado',
-    'Domingo',
-  ][dia.getDay()];
+  const nombreDelDiaSegunFecha = (dia) =>
+    [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miercoles",
+      "Jueves",
+      "Viernes",
+      "Sabado",
+      "Domingo",
+    ][dia.getDay()];
 
   async function trabajadorScaneado(emailTrabajador) {
     try {
-      
       const docuRef = doc(firestore, `Users/${emailTrabajador}`);
       const consulta = await getDoc(docuRef);
       if (consulta.exists()) {
         //si existen datos
         const infoDocu = consulta.data();
-        
-        if(infoDocu.Estado == "Habilitado"){
-          const dia = new Date;
+
+        if (infoDocu.Estado == "Habilitado") {
+          const dia = new Date();
           const nombreDia = nombreDelDiaSegunFecha(dia);
           alert(`Dia de hoy ${nombreDia}`);
           console.log("Nombre : ", infoDocu);
-        }else{
+        } else {
           Vibration.vibrate(1500);
-          alert('Ticket ya utilizado');
+          alert("Ticket ya utilizado");
         }
       }
     } catch (error) {
-      
-      console.log(error)
+      console.log(error);
     }
   }
 
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    let datoTrabajadorScaneado = data.split(' ');
+    let datoTrabajadorScaneado = data.split(" ");
     trabajadorScaneado(datoTrabajadorScaneado[0]);
-    
   };
 
   if (hasPermission === null) {
@@ -70,21 +68,32 @@ const Scanner = ({ route }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
-      {scanned && <Button title={'Toque para escanear de nuevo'} onPress={() => setScanned(false)} />}
+    <View style={tw`flex h-full justify-center bg-slate-100`}>
+      <View style={tw`flex items-center justify-center`}>
+        <Text
+          style={tw`mb-2 uppercase  text-2xl font-bold tracking-tight text-gray-500 dark:text-white`}
+        >
+          VirtualCas
+        </Text>
+      </View>
+      <View
+        style={[
+          { marginTop: Constants.statusBarHeight },
+          tw`flex h-full justify-center items-center bg-slate-100`,
+        ]}
+      >
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          style={StyleSheet.absoluteFillObject}
+        />
+        {scanned && (
+          <Button
+            title={"Toque para escanear de nuevo"}
+            onPress={() => setScanned(false)}
+          />
+        )}
+      </View>
     </View>
-  )
-}
-const styles = StyleSheet.create({
-  container: {
-    marginTop: Constants.statusBarHeight,
-    flex: 1,
-    justifyContent: "center",
-    marginHorizontal: 20,
-  }
-});
-export default Scanner
+  );
+};
+export default Scanner;

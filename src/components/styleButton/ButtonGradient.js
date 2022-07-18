@@ -1,42 +1,19 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, Dimensions, TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import tw from "twrnc";
 export default function  ButtonGradient ({text, onPress}) {
     return (
-        <TouchableOpacity style={styles.container} onPress={onPress}>
+        <TouchableOpacity onPress={onPress}>
             <LinearGradient
                 // Button Linear Gradient
                 colors={['#D2B4DE', '#8E44AD']}
                 start={{x: 0, y: 0}}
                 end={{x: 1, y: 1}}    
-                style={styles.button}
+                style={tw`text-center h-45px flex justify-center items-center py-2 px-4 rounded-[14px] mt-5 w-80`}
             >
-                <Text style={styles.text}>{text}</Text>
+                <Text style={tw`text-white font-bold`}>{text}</Text>
             </LinearGradient>
         </TouchableOpacity>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        width: 200,
-        marginTop: 60,
-    },
-
-    text: {
-      fontSize: 14,
-      color: '#fff',
-      fontWeight: 'bold',
-    },
-    button: {
-        width: '80%',
-        height: 50,
-        borderRadius: 25,
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    
-  });

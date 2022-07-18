@@ -19,13 +19,13 @@ const QrCode = ({ route }) => {
       >
         <View style={tw`items-center justify-center`}>
           <Text
-            style={tw`mb-2 uppercase  text-2xl font-bold tracking-tight text-gray-900 dark:text-white`}
+            style={tw`mb-4 uppercase  text-2xl font-bold tracking-tight text-gray-700 dark:text-white`}
           >
           ticket código QR
           </Text>
-          <QRCode value={qrUsuario} size={180} />
+          <QRCode value={qrUsuario} size={200}/>
           <Text
-            style={tw`font-normal text-lg text-gray-700 dark:text-gray-400`}
+            style={tw`mt-4 font-normal text-lg text-gray-700 text-center dark:text-gray-400`}
           >
             Muestra este código QR en el casino para canjear tu ticket
           </Text>
