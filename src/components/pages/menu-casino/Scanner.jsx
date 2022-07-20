@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Button, Vibration } from "react-native";
+import { View, Text, Button, Vibration, Alert } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import Constants from "expo-constants";
-import { runOnJS } from "react-native-reanimated/lib/reanimated2/core";
+import ButtonGradient from "../../styleButton/ButtonGradient";
 import { app } from "../../../firebase/firebaseconfig";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import tw from "twrnc";
@@ -35,11 +35,11 @@ const Scanner = ({ route }) => {
         if (infoDocu.Estado == "Habilitado") {
           const dia = new Date();
           const nombreDia = nombreDelDiaSegunFecha(dia);
-          alert(`Dia de hoy ${nombreDia}`);
+          Alert.alert("Hoy", "Dia actual " + nombreDia);
           console.log("Nombre : ", infoDocu);
         } else {
           Vibration.vibrate(1500);
-          alert("Ticket ya utilizado");
+          Alert.alert("Error", "Usuario deshabilitado");
         }
       }
     } catch (error) {
@@ -68,30 +68,32 @@ const Scanner = ({ route }) => {
   }
 
   return (
-    <View style={tw`flex h-full justify-center bg-slate-100`}>
-      <View style={tw`flex items-center justify-center`}>
+    <View
+      style={[
+        { marginTop: Constants.statusBarHeight },
+        tw`flex h-full justify-center items-center bg-slate-100`,
+      ]}
+    >
+      <View
+        style={tw`max-w-90 min-w-80 rounded-xl bg-white dark:bg-gray-800 shadow-xl p-6`}
+      >
         <Text
           style={tw`mb-2 uppercase  text-2xl font-bold tracking-tight text-gray-500 dark:text-white`}
         >
           VirtualCas
         </Text>
-      </View>
-      <View
-        style={[
-          { marginTop: Constants.statusBarHeight },
-          tw`flex h-full justify-center items-center bg-slate-100`,
-        ]}
-      >
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
-        />
-        {scanned && (
-          <Button
-            title={"Toque para escanear de nuevo"}
-            onPress={() => setScanned(false)}
+        <View style={tw`items-center justify-center`}>
+          <BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+            style={tw`w-100 h-100`}
           />
-        )}
+          {scanned && (
+            <ButtonGradient
+              text="Toque para escanear de nuevo"
+              onPress={() => setScanned(false)}
+            />
+          )}
+        </View>
       </View>
     </View>
   );
