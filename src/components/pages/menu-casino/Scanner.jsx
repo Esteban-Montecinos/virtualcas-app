@@ -21,7 +21,6 @@ const Scanner = ({ route }) => {
       "Jueves",
       "Viernes",
       "Sabado",
-      "Domingo",
     ][dia.getDay()];
 
   async function trabajadorScaneado(emailTrabajador) {
@@ -30,13 +29,54 @@ const Scanner = ({ route }) => {
       const consulta = await getDoc(docuRef);
       if (consulta.exists()) {
         //si existen datos
-        const infoDocu = consulta.data();
+        const trabajador = consulta.data();
 
-        if (infoDocu.Estado == "Habilitado") {
+        if (trabajador.Estado === "Habilitado") {
           const dia = new Date();
           const nombreDia = nombreDelDiaSegunFecha(dia);
-          Alert.alert("Hoy", "Dia actual " + nombreDia);
-          console.log("Nombre : ", infoDocu);
+          switch(nombreDia){
+            case "Lunes":
+              console.log("lunes")
+              if(trabajador.Horario.Lunes){
+                if(trabajador.Horario.Lunes[0] == "Lunes" || trabajador.Horario.Lunes[3] == "Lunes"){
+
+                }
+              }else if(trabajador.Horario.Domingo){
+                if( trabajador.Horario.Domingo[3] == "Lunes"){
+
+                }
+              }
+            break;
+            case "Martes":
+              console.log("Martes")
+            break;
+            case "Miercoles":
+              console.log("Miercoles")
+            break;
+            case "Jueves":
+              console.log("Jueves"+ trabajador.Horario.Jueves)
+              if(trabajador.Horario.Jueves){
+                if(trabajador.Horario.Jueves[0] == "Jueves" || trabajador.Horario.Lunes[3] == "Jueves"){
+                  Alert.alert("Hoy", "Dia actual " + nombreDia);
+                }
+              }else if(trabajador.Horario.Miercoles){
+                if( trabajador.Horario.Miercoles[3] == "Jueves"){
+                  
+                }
+              }
+            break;
+            case "Viernes":
+              console.log("Viernes")
+            break;
+            case "Sabado":
+              console.log("Sabado")
+            break;
+            case "Domingo":
+              console.log("Domingo")
+            break;
+          }
+          
+          //console.log("Nombre : ", trabajador);
         } else {
           Vibration.vibrate(1500);
           Alert.alert("Error", "Usuario deshabilitado");
@@ -75,7 +115,7 @@ const Scanner = ({ route }) => {
       ]}
     >
       <View
-        style={tw`max-w-90 min-w-80 rounded-xl bg-white dark:bg-gray-800 shadow-xl p-6`}
+        style={tw`items-center max-w-90 min-w-80 rounded-xl bg-white dark:bg-gray-800 shadow-xl p-6`}
       >
         <Text
           style={tw`mb-2 uppercase  text-2xl font-bold tracking-tight text-gray-500 dark:text-white`}
