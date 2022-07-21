@@ -13,7 +13,7 @@ const VerMovimientos = ({ route }) => {
       ]}
     >
       <View
-        style={tw`flex p-4 w-90 mt-12 items-center text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
+        style={tw`flex p-4 mb-2 w-90 mt-12 items-center text-sm font-medium text-gray-900 bg-white border border-gray-200 shadow-xl rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
       >
         <Text
           style={tw`uppercase  text-xl font-bold tracking-tight text-gray-700 dark:text-white`}
@@ -23,7 +23,7 @@ const VerMovimientos = ({ route }) => {
       </View>
       <ScrollView style={{ flex: 1 }}>
         <View
-          style={tw`flex w-90 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
+          style={tw`flex w-90 text-sm font-medium text-gray-900 bg-white border border-gray-200 shadow-xl rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
         >
           <View
             style={tw`flex items-center w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600`}

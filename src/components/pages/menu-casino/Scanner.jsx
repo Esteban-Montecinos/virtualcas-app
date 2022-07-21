@@ -6,22 +6,19 @@ import ButtonGradient from "../../styleButton/ButtonGradient";
 import { app } from "../../../firebase/firebaseconfig";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import tw from "twrnc";
+import ModalTrabajador from "./ModalTrabajador";
 const firestore = getFirestore(app);
 
 const Scanner = ({ route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [trabajadorActual, setTrabajadorActual] = useState(false);
   const { usuario, email } = route.params;
   const nombreDelDiaSegunFecha = (dia) =>
-    [
-      "Domingo",
-      "Lunes",
-      "Martes",
-      "Miercoles",
-      "Jueves",
-      "Viernes",
-      "Sabado",
-    ][dia.getDay()];
+    ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"][
+      dia.getDay()
+    ];
 
   async function trabajadorScaneado(emailTrabajador) {
     try {
@@ -30,52 +27,55 @@ const Scanner = ({ route }) => {
       if (consulta.exists()) {
         //si existen datos
         const trabajador = consulta.data();
-
+        setTrabajadorActual(trabajador);
         if (trabajador.Estado === "Habilitado") {
           const dia = new Date();
           const nombreDia = nombreDelDiaSegunFecha(dia);
-          switch(nombreDia){
+          switch (nombreDia) {
             case "Lunes":
-              console.log("lunes")
-              if(trabajador.Horario.Lunes){
-                if(trabajador.Horario.Lunes[0] == "Lunes" || trabajador.Horario.Lunes[3] == "Lunes"){
-
+              console.log("lunes");
+              if (trabajador.Horario.Lunes) {
+                if (
+                  trabajador.Horario.Lunes[0] == "Lunes" ||
+                  trabajador.Horario.Lunes[3] == "Lunes"
+                ) {
                 }
-              }else if(trabajador.Horario.Domingo){
-                if( trabajador.Horario.Domingo[3] == "Lunes"){
-
+              } else if (trabajador.Horario.Domingo) {
+                if (trabajador.Horario.Domingo[3] == "Lunes") {
                 }
               }
-            break;
+              break;
             case "Martes":
-              console.log("Martes")
-            break;
+              console.log("Martes");
+              break;
             case "Miercoles":
-              console.log("Miercoles")
-            break;
+              console.log("Miercoles");
+              break;
             case "Jueves":
-              console.log("Jueves"+ trabajador.Horario.Jueves)
-              if(trabajador.Horario.Jueves){
-                if(trabajador.Horario.Jueves[0] == "Jueves" || trabajador.Horario.Lunes[3] == "Jueves"){
-                  Alert.alert("Hoy", "Dia actual " + nombreDia);
+              console.log("Jueves" + trabajador.Horario.Jueves);
+              if (trabajador.Horario.Jueves) {
+                if (
+                  trabajador.Horario.Jueves[0] == "Jueves" ||
+                  trabajador.Horario.Lunes[3] == "Jueves"
+                ) {
+                  setIsModalOpen(!isModalOpen);
                 }
-              }else if(trabajador.Horario.Miercoles){
-                if( trabajador.Horario.Miercoles[3] == "Jueves"){
-                  
+              } else if (trabajador.Horario.Miercoles) {
+                if (trabajador.Horario.Miercoles[3] == "Jueves") {
                 }
               }
-            break;
+              break;
             case "Viernes":
-              console.log("Viernes")
-            break;
+              console.log("Viernes");
+              break;
             case "Sabado":
-              console.log("Sabado")
-            break;
+              console.log("Sabado");
+              break;
             case "Domingo":
-              console.log("Domingo")
-            break;
+              console.log("Domingo");
+              break;
           }
-          
+
           //console.log("Nombre : ", trabajador);
         } else {
           Vibration.vibrate(1500);
@@ -135,6 +135,12 @@ const Scanner = ({ route }) => {
           )}
         </View>
       </View>
+      <ModalTrabajador
+        nombreTrabajador={trabajadorActual.NombreC}
+        emailCasino={email}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </View>
   );
 };
