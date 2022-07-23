@@ -119,7 +119,7 @@ const Login = () => {
                 />
                 <Text
                   style={tw`text-gray-500 mt-6`}
-                  onPress={() => navigation.navigate("Recover", {volver: "Login"})}
+                  onPress={() => navigation.navigate("Recover", {volver: "Login",email: null,usuario: null})}
                 >
                   ¿Problemas con tu contraseña?{" "}
                   <Text style={tw`text-blue-600 font-bold`}>Recupérala.</Text>

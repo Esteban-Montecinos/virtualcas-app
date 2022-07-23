@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./menu/Home";
 import QrCode from "./menu/QrCode";
 import VerMovimientos from "./menu/VerMovimientos";
-import Cuenta from "./menu/Cuenta";
+import Cuenta from "./menu-casino/Cuenta";
 import Horario from "./menu/Horario";
 
 const Tab = createBottomTabNavigator();

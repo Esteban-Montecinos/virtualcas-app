@@ -14,6 +14,12 @@ const Cuenta = ({ route }) => {
     navigation.navigate("Login");
   };
   const { usuario, email } = route.params;
+  var ruta = "";
+  if(usuario.Tipo === "Casino"){
+    ruta = "MainCasino";
+  }else{
+    ruta = "Main";
+  }
   return (
     <View
       style={[
@@ -60,8 +66,11 @@ const Cuenta = ({ route }) => {
         </Text>
         <View style={tw`border-b border-gray-400 pt-2`} />
         <View style={tw`flex justify-center items-center`}>
-          <TouchableOpacity style={tw`bg-red-500 py-2 px-4 rounded mt-5`} onPress={cerrarSesion}>
-            <Text style={tw`text-white font-bold`}>Cerrar Sesión</Text>
+          <TouchableOpacity style={tw`bg-slate-500 w-80 py-2 px-4 rounded mt-5`} onPress={() => navigation.navigate("Recover", {volver: ruta,email: email,usuario: usuario})}>
+            <Text style={tw`text-white font-bold text-center`}>Cambiar contraseña</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={tw`bg-red-500 w-80 py-2 px-4 rounded mt-5`} onPress={cerrarSesion}>
+            <Text style={tw`text-white font-bold text-center`}>Cerrar sesión</Text>
           </TouchableOpacity>
         </View>
       </View>

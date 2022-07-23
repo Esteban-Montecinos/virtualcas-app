@@ -29,7 +29,7 @@ const FormikImputValue = ({ name, ...props }) => {
 
 const RecoverPassword = ({ navigation, route }) => {
   const [error, setError] = useState("");
-  const { volver } = route.params;
+  const { volver, usuario, email } = route.params;
   return (
     <View
       style={[
@@ -53,7 +53,7 @@ const RecoverPassword = ({ navigation, route }) => {
               try {
                 await sendPasswordResetEmail(auth, datos.emailReset);
                 setError("");
-                navigation.navigate(`${volver}`);
+                navigation.navigate("Login");
               } catch (error) {
                 resetForm();
                 console.log("-"+error+"-");
@@ -82,7 +82,10 @@ const RecoverPassword = ({ navigation, route }) => {
                 <ButtonGradient
                   text={"Volver"}
                   onPress={() => {
-                    navigation.navigate(`${volver}`);
+                    navigation.navigate(`${volver}`, {
+                      usuario: usuario,
+                      email: email,
+                    });
                   }}
                 />
               </>
