@@ -35,7 +35,7 @@ const Cuenta = ({ route }) => {
             <Text style={tw`text-gray-800 uppercase dark:text-white font-bold`}>
               {usuario.NombreC}
             </Text>
-            <Text style={tw`text-gray-500 uppercase font-bold`}>{usuario.Puesto}</Text>
+            <Text style={tw`text-gray-500 uppercase font-bold`}>{email}</Text>
           </View>
         </View>
         <View style={tw`border-b border-gray-400 pt-2`} />
