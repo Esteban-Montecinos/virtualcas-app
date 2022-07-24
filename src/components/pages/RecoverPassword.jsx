@@ -56,7 +56,6 @@ const RecoverPassword = ({ navigation, route }) => {
                 navigation.navigate("Login");
               } catch (error) {
                 resetForm();
-                console.log("-"+error+"-");
                 if (
                   error ==
                   "FirebaseError: Firebase: Error (auth/user-not-found)."
