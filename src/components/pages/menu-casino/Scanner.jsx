@@ -115,6 +115,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -164,6 +165,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -219,6 +221,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -280,6 +283,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -329,6 +333,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -384,6 +389,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -445,6 +451,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -494,6 +501,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -549,6 +557,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -610,6 +619,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -659,6 +669,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -714,6 +725,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -775,6 +787,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -824,6 +837,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -879,6 +893,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -940,6 +955,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -989,6 +1005,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -1044,6 +1061,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -1105,6 +1123,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -1154,6 +1173,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -1209,6 +1229,7 @@ const Scanner = ({ route }) => {
                       Segundo: dia.getSeconds(),
                       TipoTicket: tipoT,
                       Trabajador: emailTrabajador,
+                      Dia:nombreDia
                     });
                     setIsModalOpen(!isModalOpen);
                   }
@@ -1225,8 +1246,6 @@ const Scanner = ({ route }) => {
               }
               break;
           }
-
-          //console.log("Nombre : ", trabajador);
         } else {
           Vibration.vibrate(1500);
           Alert.alert(
