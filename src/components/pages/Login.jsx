@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, TextInput, Alert } from "react-native";
+import { Text, View, TextInput, Alert, Image } from "react-native";
 import { Formik, useField } from "formik";
 import { loginValidationSchema } from "../validationSchemas/login";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -35,11 +35,10 @@ const Login = () => {
   return (
     <View style={tw`flex h-full justify-center bg-slate-100`}>
       <View style={tw`flex items-center justify-center`}>
-        <Text
-          style={tw`mb-2 uppercase  text-2xl font-bold tracking-tight text-gray-700 dark:text-white`}
-        >
-          VirtualCas
-        </Text>
+      <Image
+        style={tw`w-25 h-25 mb-2`}
+        source={require('../../images/vcas-logo-cuadrado.jpg')}
+      />
         <Text
           style={tw`mb-2  text-base tracking-tight text-gray-500 dark:text-white`}
         >
