@@ -1,4 +1,5 @@
 import React from "react";
+import { usePreventScreenCapture } from 'expo-screen-capture';
 import Constants from "expo-constants";
 import { Text, View, StyleSheet } from "react-native";
 import tw from "twrnc";
@@ -7,6 +8,7 @@ import QRCode from "react-native-qrcode-svg";
 const QrCode = ({ route }) => {
   const { usuario, email } = route.params;
   const qrUsuario = email + " " + usuario.Empresa + " Código-QR";
+  //usePreventScreenCapture();
   return (
     <View
       style={[
