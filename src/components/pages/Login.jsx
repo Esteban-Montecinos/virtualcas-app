@@ -74,6 +74,8 @@ const Login = () => {
                         usuario: infoDocu,
                         email: datos.email,
                       });
+                    }else{
+                      setError("Intenta con otra cuenta.")
                     }
                   } else {
                     setError("Tu cuenta se encuentra deshabilitada.")
