@@ -8,7 +8,7 @@ import QRCode from "react-native-qrcode-svg";
 const QrCode = ({ route }) => {
   const { usuario, email } = route.params;
   const qrUsuario = email + " " + usuario.Empresa + " Código-QR";
-  //usePreventScreenCapture();
+  /*usePreventScreenCapture();*/
   return (
     <View
       style={[

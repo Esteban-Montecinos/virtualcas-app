@@ -399,11 +399,11 @@ const Scanner = ({ route }) => {
               }else {
                 noAplica = true;
               }
-              if (noAplica) {
+              /*if (noAplica) {
                 Vibration.vibrate(1500);
                 Alert.alert("No aplica", "Usuario no aplica colasion aún");
                 noAplica = false;
-              }
+              }*/
               break;
             case "Miercoles":
               //en caso de que sea horario nocturno que termina de un dia anterior
@@ -567,11 +567,11 @@ const Scanner = ({ route }) => {
               }else {
                 noAplica = true;
               }
-              if (noAplica) {
+              /*if (noAplica) {
                 Vibration.vibrate(1500);
                 Alert.alert("No aplica", "Usuario no aplica colasion aún");
                 noAplica = false;
-              }
+              }*/
               break;
             case "Jueves":
               //en caso de que sea horario nocturno que termina de un dia anterior
