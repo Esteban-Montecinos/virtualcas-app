@@ -6,7 +6,7 @@ import Home from "./menu/Home";
 import QrCode from "./menu/QrCode";
 import VerMovimientos from "./menu/VerMovimientos";
 import Cuenta from "./menu-casino/Cuenta";
-import Horario from "./menu/Horario";
+import Comida from "./menu/Comida";
 
 const Tab = createBottomTabNavigator();
 const Main = () => {
@@ -26,8 +26,8 @@ const Main = () => {
             case "QrCode":
               iconName = focused ? "qr-code" : "qr-code-outline";
               break;
-            case "Horario":
-              iconName = focused ? "calendar" : "calendar-outline";
+            case "Comida":
+              iconName = focused ? "fast-food" : "fast-food-outline";
               break;
             case "VerMovimientos":
               iconName = focused ? "document-text" : "document-text-outline";
@@ -53,10 +53,10 @@ const Main = () => {
         component={QrCode}
       />
       <Tab.Screen
-        options={{ tabBarLabel: "Horario", title: "Horario" }}
+        options={{ tabBarLabel: "Comida", title: "Comida" }}
         initialParams={{ usuario, email }}
-        name="Horario"
-        component={Horario}
+        name="Comida"
+        component={Comida}
       />
       <Tab.Screen
         options={{ tabBarLabel: "Ver Movimientos", title: "Ver Movimientos" }}

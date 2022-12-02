@@ -45,11 +45,6 @@ const Cuenta = ({ route }) => {
           </View>
         </View>
         <View style={tw`border-b border-gray-400 pt-2`} />
-        <Text style={tw`text-gray-500 font-bold`}>Turno</Text>
-        <Text styles={tw`font-normal text-lg text-gray-700 dark:text-gray-400`}>
-          {usuario.TipoH}
-        </Text>
-        <View style={tw`border-b border-gray-400 pt-2`} />
         <Text style={tw`text-gray-500 font-bold`}>Rut</Text>
         <Text styles={tw`font-normal text-lg text-gray-700 dark:text-gray-400`}>
           {usuario.Rut}
