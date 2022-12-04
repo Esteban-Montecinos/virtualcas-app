@@ -23,8 +23,8 @@ const Scanner = ({ route }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [comidaMes, setComidaMes] = useState([]);
   const [trabajadorActual, setTrabajadorActual] = useState(false);
-  const [trabajadorTicket, setTrabajadorTicket] = useState(false);
   const [trabajadorPorRUT, setTrabajadorPorRUT] = useState(false);
+  const [trabajadorTicket, setTrabajadorTicket] = useState(false);
   const TicketsCollection = collection(firestore, "Ticket");
   const UsersCollection = collection(firestore, "Users");
 
@@ -242,6 +242,53 @@ const Scanner = ({ route }) => {
         }
       } else {
         Alert.alert("Error", "Usuario de otra empresa");
+      }
+    }else if (tipoT == "Colacion") {
+      try {
+        const docuRef = doc(firestore, `Users/${emailTrabajador}`);
+        const consulta = await getDoc(docuRef);
+        if (consulta.exists()) {
+          //si existen datos
+          const trabajador = consulta.data();
+          setTrabajadorActual(trabajador);
+          if (
+            trabajador.Estado === "Habilitado" &&
+            trabajador.Empresa === usuario.Empresa
+          ) {
+            const dia = new Date();
+            var diaActual = dia.getDate();
+            var mesActual = dia.getUTCMonth() + 1;
+            var anoActual = dia.getFullYear();
+            const nombreDia = nombreDelDiaSegunFecha(dia);
+            let fechaActual = diaActual + "-" + mesActual + "-" + anoActual;
+
+            let ticketTrabajadorHoy = trabajadorTicket.filter(
+              (objeto) =>
+                objeto.Trabajador === emailTrabajador &&
+                objeto.Fecha === fechaActual && objeto.TipoTicket === "Colacion"
+            );
+            if (ticketTrabajadorHoy != "") {
+              Alert.alert("Error", "Ticket de colacion ya utilizado");
+            } else {
+              addDoc(collection(firestore, "Ticket"), {
+                Casino: email,
+                Empresa: usuario.Empresa,
+                Fecha: fechaActual,
+                Hora: dia.getHours(),
+                Minuto: dia.getMinutes(),
+                Segundo: dia.getSeconds(),
+                TipoTicket: tipoT,
+                Trabajador: emailTrabajador,
+                Dia: nombreDia,
+              });
+              setIsModalOpen(!isModalOpen);
+            }
+          } else {
+            Alert.alert("Error", "Usuario Deshabilitado o de otra empresa");
+          }
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
   }
