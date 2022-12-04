@@ -17,40 +17,96 @@ const firestore = getFirestore(app);
 const QrCode = ({ route }) => {
   const { usuario, email } = route.params;
   const [comidaMes, setComidaMes] = useState([]);
-  const [comidaDia, setComidaDia] = useState("");
   const [refreshing, setRefreshing] = useState(false);
-  async function getComidasMes(rutEmpresa) {
+  async function getComidasMes(rutEmpresa,resultado,dia) {
     const docuRef = doc(firestore, `FoodSemanal/${rutEmpresa}`);
     const consulta = await getDoc(docuRef);
     if (consulta.exists()) {
       //si existen datos
-      setComidaMes(consulta.data());
+      if(nombreDelDiaSegunFecha(dia) == "Lunes"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Lunes);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Lunes);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Lunes);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Lunes);
+        }
+      }else if(nombreDelDiaSegunFecha(dia) == "Martes"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Martes);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Martes);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Martes);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Martes);
+        }
+      }else if(nombreDelDiaSegunFecha(dia) == "Miercoles"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Miercoles);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Miercoles);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Miercoles);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Miercoles);
+        }
+      }else if(nombreDelDiaSegunFecha(dia) == "Jueves"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Jueves);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Jueves);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Jueves);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Jueves);
+        }
+      }else if(nombreDelDiaSegunFecha(dia) == "Viernes"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Viernes);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Viernes);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Viernes);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Viernes);
+        }
+      }else if(nombreDelDiaSegunFecha(dia) == "Sabado"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Sabado);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Sabado);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Sabado);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Sabado);
+        }
+      }else if(nombreDelDiaSegunFecha(dia) == "Domingo"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Domingo);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Domingo);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Domingo);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Domingo);
+        }
+      }
     }
   }
   var count = 0;
   useEffect(() => {
-    getComidasMes(usuario.Empresa);
+    getComidasMes(usuario.Empresa,result,dia);
   }, []);
   const onRefresh = () => {
     setRefreshing(true);
-    getComidasMes(usuario.Empresa);
+    getComidasMes(usuario.Empresa,result,dia);
     setRefreshing(false);
   };
-  function getComida(comida) {
-    comida.map((Comida, index) => {
-      if (index >= 0 && index % 2 == 0) {
-        let i = index + 1;
-        return (
-          <Text key={count++} style={tw`font-normal text-lg`}>
-            {Comida} con: {comida[i]} calorias.
-          </Text>
-        );
-      } else {
-        <Text style={tw`font-normal text-lg`}>Hoy no hay comida</Text>;
-      }
-    });
-  }
-  const qrUsuario = email + " " + usuario.Empresa + " Código-QR ";
+
+  const qrUsuario = usuario.Empresa + "=" + email + "=Código-QR";
   /*usePreventScreenCapture();*/
 
   const nombreDelDiaSegunFecha = (dia) =>
@@ -59,7 +115,9 @@ const QrCode = ({ route }) => {
     ];
   const dia = new Date();
   const nombreDia = nombreDelDiaSegunFecha(dia);
-
+  var oneJan = new Date(dia.getFullYear(), 0, 1);
+  var numberOfDays = Math.floor((dia - oneJan) / (24 * 60 * 60 * 1000));
+  var result = Math.ceil((dia.getDay() + 1 + numberOfDays) / 7);
   return (
     <View
       style={[
@@ -89,167 +147,17 @@ const QrCode = ({ route }) => {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
               }
             >
-              {nombreDia == "Lunes" ? (
+              {comidaMes ? (
                 <Text
                   style={tw`mt-4 font-normal text-lg text-gray-700 text-center dark:text-gray-400`}
                 >
                   La comida de hoy es{" "}
-                  {comidaMes?.ComidaMes?.sem1?.Lunes?.map((Comida, index) => {
+                  {comidaMes?.map((Comida, index) => {
                     if (index >= 0 && index % 2 == 0) {
                       let i = index + 1;
                       return (
                         <Text key={count++} style={tw`font-normal text-lg`}>
-                          {Comida} con: {comidaMes?.ComidaMes?.sem1?.Lunes[i]}{" "}
-                          calorias.
-                        </Text>
-                      );
-                    } else {
-                      <Text style={tw`font-normal text-lg`}>
-                        Hoy no hay comida
-                      </Text>;
-                    }
-                  })}
-                </Text>
-              ) : nombreDia == "Martes" ? (
-                <Text
-                  style={tw`mt-4 font-normal text-lg text-gray-700 text-center dark:text-gray-400`}
-                >
-                  La comida de hoy es{" "}
-                  {comidaMes?.ComidaMes?.sem1?.Martes?.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
-                      let i = index + 1;
-                      return (
-                        <View
-                          key={count++}
-                          style={tw`flex-row justify-between`}
-                        >
-                          <Text style={tw`font-normal text-lg`}>
-                            {Comida} con:{" "}
-                            {comidaMes?.ComidaMes?.sem1?.Martes[i]} calorias.
-                          </Text>
-                        </View>
-                      );
-                    } else {
-                      <View style={tw`flex-row justify-between`}>
-                        <Text style={tw`font-normal text-lg`}>
-                          Hoy no hay comida
-                        </Text>
-                      </View>;
-                    }
-                  })}
-                </Text>
-              ) : nombreDia == "Miercoles" ? (
-                <Text
-                  style={tw`mt-4 font-normal text-lg text-gray-700 text-center dark:text-gray-400`}
-                >
-                  La comida de hoy es{" "}
-                  {comidaMes?.ComidaMes?.sem1?.Miercoles?.map(
-                    (Comida, index) => {
-                      if (index >= 0 && index % 2 == 0) {
-                        let i = index + 1;
-                        return (
-                          <View
-                            key={count++}
-                            style={tw`flex-row justify-between`}
-                          >
-                            <Text style={tw`font-normal text-lg`}>
-                              {Comida} con:{" "}
-                              {comidaMes?.ComidaMes?.sem1?.Miercoles[i]}{" "}
-                              calorias.
-                            </Text>
-                          </View>
-                        );
-                      } else {
-                        <View style={tw`flex-row justify-between`}>
-                          <Text style={tw`font-normal text-lg`}>
-                            Hoy no hay comida
-                          </Text>
-                        </View>;
-                      }
-                    }
-                  )}
-                </Text>
-              ) : nombreDia == "Jueves" ? (
-                <Text
-                  style={tw`mt-4 font-normal text-lg text-gray-700 text-center dark:text-gray-400`}
-                >
-                  La comida de hoy es{" "}
-                  {comidaMes?.ComidaMes?.sem1?.Jueves?.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
-                      let i = index + 1;
-                      return (
-                        <View
-                          key={count++}
-                          style={tw`flex-row justify-between`}
-                        >
-                          <Text style={tw`font-normal text-lg`}>
-                            {Comida} con:{" "}
-                            {comidaMes?.ComidaMes?.sem1?.Jueves[i]} calorias.
-                          </Text>
-                        </View>
-                      );
-                    } else {
-                      <View style={tw`flex-row justify-between`}>
-                        <Text style={tw`font-normal text-lg`}>
-                          Hoy no hay comida
-                        </Text>
-                      </View>;
-                    }
-                  })}
-                </Text>
-              ) : nombreDia == "Viernes" ? (
-                <Text
-                  style={tw`mt-4 font-normal text-lg text-gray-700 text-center dark:text-gray-400`}
-                >
-                  La comida de hoy es{" "}
-                  {comidaMes?.ComidaMes?.sem1?.Viernes?.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
-                      let i = index + 1;
-                      return (
-                        <Text key={count++} style={tw`font-normal text-lg`}>
-                          {Comida} con: {comidaMes?.ComidaMes?.sem1?.Viernes[i]}{" "}
-                          calorias{" "}
-                        </Text>
-                      );
-                    } else {
-                      <Text style={tw`font-normal text-lg`}>
-                        Hoy no hay comida
-                      </Text>;
-                    }
-                  })}
-                </Text>
-              ) : nombreDia == "Sabado" ? (
-                <Text
-                  style={tw`mt-4 font-normal text-lg text-gray-700 text-center dark:text-gray-400`}
-                >
-                  La comida de hoy es{" "}
-                  {comidaMes?.ComidaMes?.sem1?.Sabado?.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
-                      let i = index + 1;
-                      return (
-                        <Text key={count++} style={tw`font-normal text-lg`}>
-                          {Comida} con: {comidaMes?.ComidaMes?.sem1?.Sabado[i]}{" "}
-                          calorias.
-                        </Text>
-                      );
-                    } else {
-                      <Text style={tw`font-normal text-lg`}>
-                        Hoy no hay comida
-                      </Text>;
-                    }
-                  })}
-                </Text>
-              ) : nombreDia == "Domingo" ? (
-                <Text
-                  style={tw`mt-4 font-normal text-lg text-gray-700 text-center dark:text-gray-400`}
-                >
-                  La comida de hoy es{" "}
-                  {comidaMes?.ComidaMes?.sem1?.Domingo?.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
-                      let i = index + 1;
-                      return (
-                        <Text key={count++} style={tw`font-normal text-lg`}>
-                          {Comida} con: {comidaMes?.ComidaMes?.sem1?.Domingo[i]}{" "}
+                          {Comida} con: {comidaMes?.[i]}{" "}
                           calorias.
                         </Text>
                       );

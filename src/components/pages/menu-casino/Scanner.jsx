@@ -21,14 +21,96 @@ const Scanner = ({ route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [comidaMes, setComidaMes] = useState([]);
   const [trabajadorActual, setTrabajadorActual] = useState(false);
-  const [horaActual, setHoraActual] = useState(new Date().getTime());
   const [trabajadorTicket, setTrabajadorTicket] = useState(false);
   const [trabajadorPorRUT, setTrabajadorPorRUT] = useState(false);
-  const [emailTrabajadorActual, setEmailTrabajadorActual] = useState(false);
   const TicketsCollection = collection(firestore, "Ticket");
   const UsersCollection = collection(firestore, "Users");
-  
+
+  async function getComidasMes(rutEmpresa, resultado, dia) {
+    const docuRef = doc(firestore, `FoodSemanal/${rutEmpresa}`);
+    const consulta = await getDoc(docuRef);
+    if (consulta.exists()) {
+      //si existen datos
+
+      if(nombreDelDiaSegunFecha(dia) == "Lunes"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Lunes);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Lunes);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Lunes);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Lunes);
+        }
+      }else if(nombreDelDiaSegunFecha(dia) == "Martes"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Martes);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Martes);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Martes);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Martes);
+        }
+      }else if(nombreDelDiaSegunFecha(dia) == "Miercoles"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Miercoles);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Miercoles);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Miercoles);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Miercoles);
+        }
+      }else if(nombreDelDiaSegunFecha(dia) == "Jueves"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Jueves);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Jueves);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Jueves);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Jueves);
+        }
+      }else if(nombreDelDiaSegunFecha(dia) == "Viernes"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Viernes);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Viernes);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Viernes);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Viernes);
+        }
+      }else if(nombreDelDiaSegunFecha(dia) == "Sabado"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Sabado);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Sabado);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Sabado);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Sabado);
+        }
+      }else if(nombreDelDiaSegunFecha(dia) == "Domingo"){
+        if (resultado % 4 == 1) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem1?.Domingo);
+        } else if (resultado % 4 == 2) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem2?.Domingo);
+        } else if (resultado % 4 == 3) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem3?.Domingo);
+        } else if (resultado % 4 == 0) {
+          setComidaMes(consulta.data()?.ComidaMes?.sem4?.Domingo);
+        }
+      }
+    }
+  }
+  var currentdate = new Date();
+  var oneJan = new Date(currentdate.getFullYear(), 0, 1);
+  var numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
+  var result = Math.ceil((currentdate.getDay() + 1 + numberOfDays) / 7);
   const getUsers = async () => {
     const data = await getDocs(UsersCollection);
 
@@ -50,6 +132,7 @@ const Scanner = ({ route }) => {
   useEffect(() => {
     getUsers();
     getTickets();
+    getComidasMes(usuario.Empresa, result, currentdate);
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === "granted");
@@ -61,34 +144,83 @@ const Scanner = ({ route }) => {
     ];
 
   async function trabajadorScaneado(emailTrabajador, tipoT) {
-    try {
-      const docuRef = doc(firestore, `Users/${emailTrabajador}`);
-      const consulta = await getDoc(docuRef);
-      if (consulta.exists()) {
-        //si existen datos
-        const trabajador = consulta.data();
-        setTrabajadorActual(trabajador);
-        setEmailTrabajadorActual(emailTrabajador);
+    if (tipoT == "Código-QR") {
+      try {
+        const docuRef = doc(firestore, `Users/${emailTrabajador}`);
+        const consulta = await getDoc(docuRef);
+        if (consulta.exists()) {
+          //si existen datos
+          const trabajador = consulta.data();
+          setTrabajadorActual(trabajador);
+          if (
+            trabajador.Estado === "Habilitado" &&
+            trabajador.Empresa === usuario.Empresa
+          ) {
+            const dia = new Date();
+            var diaActual = dia.getDate();
+            var mesActual = dia.getUTCMonth() + 1;
+            var anoActual = dia.getFullYear();
+            const nombreDia = nombreDelDiaSegunFecha(dia);
+            let fechaActual = diaActual + "-" + mesActual + "-" + anoActual;
+
+            let ticketTrabajadorHoy = trabajadorTicket.filter(
+              (objeto) =>
+                objeto.Trabajador === emailTrabajador &&
+                objeto.Fecha === fechaActual
+            );
+            if (ticketTrabajadorHoy != "") {
+              Alert.alert("Error", "Ticket ya utilizado");
+            } else {
+              addDoc(collection(firestore, "Ticket"), {
+                Casino: email,
+                Empresa: usuario.Empresa,
+                Fecha: fechaActual,
+                Hora: dia.getHours(),
+                Minuto: dia.getMinutes(),
+                Segundo: dia.getSeconds(),
+                TipoTicket: tipoT,
+                Trabajador: emailTrabajador,
+                Dia: nombreDia,
+                Comida: comidaMes,
+              });
+              setIsModalOpen(!isModalOpen);
+            }
+          } else {
+            Alert.alert("Error", "Usuario Deshabilitado o de otra empresa");
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (tipoT == "CEDULA&serial") {
+      let trabajador = emailTrabajador.split("&");
+      let rutTrabajador = trabajador[0].split("-");
+      rutTrabajador[0] = rutTrabajador[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+      let rutFormateado = rutTrabajador[0] + "-" + rutTrabajador[1];
+
+      let trabajadorRUT = trabajadorPorRUT.filter(
+        (user) => user.Rut === rutFormateado
+      );
+      if (trabajadorRUT != "") {
         if (
-          trabajador.Estado === "Habilitado" &&
-          trabajador.Empresa === usuario.Empresa
+          trabajadorRUT[0]?.Estado === "Habilitado" &&
+          trabajadorRUT[0].Empresa === usuario.Empresa
         ) {
+          setTrabajadorActual(trabajadorRUT[0]);
           const dia = new Date();
           var diaActual = dia.getDate();
           var mesActual = dia.getUTCMonth() + 1;
           var anoActual = dia.getFullYear();
           const nombreDia = nombreDelDiaSegunFecha(dia);
-          setHoraActual(new Date().getTime());
-          var noAplica = false;
-          let fechaActual =
-          diaActual + "-" + mesActual + "-" + anoActual;
+          let fechaActual = diaActual + "-" + mesActual + "-" + anoActual;
 
           let ticketTrabajadorHoy = trabajadorTicket.filter(
             (objeto) =>
-              objeto.Trabajador === emailTrabajador &&
+              objeto.Trabajador === trabajadorRUT[0].id &&
               objeto.Fecha === fechaActual
           );
-          if (ticketTrabajadorHoy != "" ) {
+          if (ticketTrabajadorHoy != "") {
             Alert.alert("Error", "Ticket ya utilizado");
           } else {
             addDoc(collection(firestore, "Ticket"), {
@@ -98,24 +230,26 @@ const Scanner = ({ route }) => {
               Hora: dia.getHours(),
               Minuto: dia.getMinutes(),
               Segundo: dia.getSeconds(),
-              TipoTicket: tipoT,
-              Trabajador: emailTrabajador,
-              Dia:nombreDia
+              TipoTicket: "Cédula",
+              Trabajador: trabajadorRUT[0].id,
+              Dia: nombreDia,
+              Comida: comidaMes,
             });
             setIsModalOpen(!isModalOpen);
           }
-
+        } else {
+          Alert.alert("Error", "Usuario deshabilitado");
         }
+      } else {
+        Alert.alert("Error", "Usuario de otra empresa");
       }
-    } catch (error) {
-      console.log(error);
     }
   }
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    let datoTrabajadorScaneado = data.split(" ");
-    trabajadorScaneado(datoTrabajadorScaneado[0], datoTrabajadorScaneado[2]);
+    let datoTrabajadorScaneado = data.split("=");
+    trabajadorScaneado(datoTrabajadorScaneado[1], datoTrabajadorScaneado[2]);
   };
 
   if (hasPermission === null) {
@@ -156,7 +290,6 @@ const Scanner = ({ route }) => {
                 text="Toque para escanear de nuevo"
                 onPress={() => {
                   setScanned(false);
-                  setHoraActual(new Date().getTime());
                 }}
               />
             )}
@@ -165,8 +298,6 @@ const Scanner = ({ route }) => {
       </View>
       <ModalTrabajador
         trabajador={trabajadorActual}
-        emailTrabajador={emailTrabajadorActual}
-        emailCasino={email}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />

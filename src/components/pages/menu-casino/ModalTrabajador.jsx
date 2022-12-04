@@ -6,8 +6,6 @@ const ModalTrabajador = ({
   isModalOpen,
   setIsModalOpen,
   trabajador,
-  emailCasino,
-  emailTrabajador,
 }) => {
   return (
     <>
@@ -31,9 +29,6 @@ const ModalTrabajador = ({
               </Text>
               <Text style={tw`uppercase text-xl`}>
                 {trabajador.NombreC}
-              </Text>
-              <Text style={tw`uppercase text-xl`}>
-                Horario: {trabajador.TipoH}
               </Text>
             </View>
             <ButtonGradient
