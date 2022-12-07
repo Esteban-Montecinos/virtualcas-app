@@ -148,26 +148,26 @@ const QrCode = ({ route }) => {
               }
             >
               {comidaMes ? (
-                <Text
+                <><Text
                   style={tw`mt-4 font-normal text-lg text-gray-700 text-center dark:text-gray-400`}
                 >
-                  La comida de hoy es{" "}
-                  {comidaMes?.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
-                      let i = index + 1;
-                      return (
-                        <Text key={count++} style={tw`font-normal text-lg`}>
-                          {Comida} con: {comidaMes?.[i]}{" "}
-                          calorias.
-                        </Text>
-                      );
-                    } else {
-                      <Text style={tw`font-normal text-lg`}>
-                        Hoy no hay comida
-                      </Text>;
-                    }
-                  })}
+                  La comida de hoy es:
                 </Text>
+                {comidaMes?.map((Comida, index) => {
+                  if (index >= 0 && index % 2 == 0) {
+                    let i = index + 1;
+                    return (
+                      <Text key={count++} style={tw`font-normal text-lg`}>
+                        {Comida} con: {comidaMes?.[i]}{" "}
+                        calorias.
+                      </Text>
+                    );
+                  } else {
+                    <Text style={tw`font-normal text-lg`}>
+                      Hoy no hay comida
+                    </Text>;
+                  }
+                })}</>
               ) : (
                 <></>
               )}

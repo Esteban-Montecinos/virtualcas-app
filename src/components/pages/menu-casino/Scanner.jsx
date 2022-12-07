@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import tw from "twrnc";
 import ModalTrabajador from "./ModalTrabajador";
+import ModalComida from "./ModalComida";
 const firestore = getFirestore(app);
 
 const Scanner = ({ route }) => {
@@ -21,7 +22,9 @@ const Scanner = ({ route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalComidaOpen, setIsModalComidaOpen] = useState(false);
   const [comidaMes, setComidaMes] = useState([]);
+  const [datosModal, setDatosModal] = useState({});
   const [trabajadorActual, setTrabajadorActual] = useState(false);
   const [trabajadorPorRUT, setTrabajadorPorRUT] = useState(false);
   const [trabajadorTicket, setTrabajadorTicket] = useState(false);
@@ -34,7 +37,7 @@ const Scanner = ({ route }) => {
     if (consulta.exists()) {
       //si existen datos
 
-      if(nombreDelDiaSegunFecha(dia) == "Lunes"){
+      if (nombreDelDiaSegunFecha(dia) == "Lunes") {
         if (resultado % 4 == 1) {
           setComidaMes(consulta.data()?.ComidaMes?.sem1?.Lunes);
         } else if (resultado % 4 == 2) {
@@ -44,7 +47,7 @@ const Scanner = ({ route }) => {
         } else if (resultado % 4 == 0) {
           setComidaMes(consulta.data()?.ComidaMes?.sem4?.Lunes);
         }
-      }else if(nombreDelDiaSegunFecha(dia) == "Martes"){
+      } else if (nombreDelDiaSegunFecha(dia) == "Martes") {
         if (resultado % 4 == 1) {
           setComidaMes(consulta.data()?.ComidaMes?.sem1?.Martes);
         } else if (resultado % 4 == 2) {
@@ -54,7 +57,7 @@ const Scanner = ({ route }) => {
         } else if (resultado % 4 == 0) {
           setComidaMes(consulta.data()?.ComidaMes?.sem4?.Martes);
         }
-      }else if(nombreDelDiaSegunFecha(dia) == "Miercoles"){
+      } else if (nombreDelDiaSegunFecha(dia) == "Miercoles") {
         if (resultado % 4 == 1) {
           setComidaMes(consulta.data()?.ComidaMes?.sem1?.Miercoles);
         } else if (resultado % 4 == 2) {
@@ -64,7 +67,7 @@ const Scanner = ({ route }) => {
         } else if (resultado % 4 == 0) {
           setComidaMes(consulta.data()?.ComidaMes?.sem4?.Miercoles);
         }
-      }else if(nombreDelDiaSegunFecha(dia) == "Jueves"){
+      } else if (nombreDelDiaSegunFecha(dia) == "Jueves") {
         if (resultado % 4 == 1) {
           setComidaMes(consulta.data()?.ComidaMes?.sem1?.Jueves);
         } else if (resultado % 4 == 2) {
@@ -74,7 +77,7 @@ const Scanner = ({ route }) => {
         } else if (resultado % 4 == 0) {
           setComidaMes(consulta.data()?.ComidaMes?.sem4?.Jueves);
         }
-      }else if(nombreDelDiaSegunFecha(dia) == "Viernes"){
+      } else if (nombreDelDiaSegunFecha(dia) == "Viernes") {
         if (resultado % 4 == 1) {
           setComidaMes(consulta.data()?.ComidaMes?.sem1?.Viernes);
         } else if (resultado % 4 == 2) {
@@ -84,7 +87,7 @@ const Scanner = ({ route }) => {
         } else if (resultado % 4 == 0) {
           setComidaMes(consulta.data()?.ComidaMes?.sem4?.Viernes);
         }
-      }else if(nombreDelDiaSegunFecha(dia) == "Sabado"){
+      } else if (nombreDelDiaSegunFecha(dia) == "Sabado") {
         if (resultado % 4 == 1) {
           setComidaMes(consulta.data()?.ComidaMes?.sem1?.Sabado);
         } else if (resultado % 4 == 2) {
@@ -94,7 +97,7 @@ const Scanner = ({ route }) => {
         } else if (resultado % 4 == 0) {
           setComidaMes(consulta.data()?.ComidaMes?.sem4?.Sabado);
         }
-      }else if(nombreDelDiaSegunFecha(dia) == "Domingo"){
+      } else if (nombreDelDiaSegunFecha(dia) == "Domingo") {
         if (resultado % 4 == 1) {
           setComidaMes(consulta.data()?.ComidaMes?.sem1?.Domingo);
         } else if (resultado % 4 == 2) {
@@ -137,7 +140,7 @@ const Scanner = ({ route }) => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === "granted");
     })();
-  }, [scanned]);
+  }, [scanned, isModalComidaOpen]);
   const nombreDelDiaSegunFecha = (dia) =>
     ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"][
       dia.getDay()
@@ -171,19 +174,36 @@ const Scanner = ({ route }) => {
             if (ticketTrabajadorHoy != "") {
               Alert.alert("Error", "Ticket ya utilizado");
             } else {
-              addDoc(collection(firestore, "Ticket"), {
-                Casino: email,
-                Empresa: usuario.Empresa,
-                Fecha: fechaActual,
-                Hora: dia.getHours(),
-                Minuto: dia.getMinutes(),
-                Segundo: dia.getSeconds(),
-                TipoTicket: tipoT,
-                Trabajador: emailTrabajador,
-                Dia: nombreDia,
-                Comida: comidaMes,
-              });
-              setIsModalOpen(!isModalOpen);
+              if (comidaMes.length > 2) {
+                
+                setDatosModal({
+                  Casino: email,
+                  Empresa: usuario.Empresa,
+                  Fecha: fechaActual,
+                  Hora: dia.getHours(),
+                  Minuto: dia.getMinutes(),
+                  Segundo: dia.getSeconds(),
+                  TipoTicket: tipoT,
+                  Trabajador: emailTrabajador,
+                  Dia: nombreDia,
+                  Rut: trabajador.Rut
+                });
+                setIsModalComidaOpen(!isModalComidaOpen);
+              } else {
+                addDoc(collection(firestore, "Ticket"), {
+                  Casino: email,
+                  Empresa: usuario.Empresa,
+                  Fecha: fechaActual,
+                  Hora: dia.getHours(),
+                  Minuto: dia.getMinutes(),
+                  Segundo: dia.getSeconds(),
+                  TipoTicket: tipoT,
+                  Trabajador: emailTrabajador,
+                  Dia: nombreDia,
+                  Comida: comidaMes,
+                });
+                setIsModalOpen(!isModalOpen);
+              }
             }
           } else {
             Alert.alert("Error", "Usuario Deshabilitado o de otra empresa");
@@ -223,6 +243,22 @@ const Scanner = ({ route }) => {
           if (ticketTrabajadorHoy != "") {
             Alert.alert("Error", "Ticket ya utilizado");
           } else {
+            if (comidaMes.length > 2) {
+                
+              setDatosModal({
+                Casino: email,
+                Empresa: usuario.Empresa,
+                Fecha: fechaActual,
+                Hora: dia.getHours(),
+                Minuto: dia.getMinutes(),
+                Segundo: dia.getSeconds(),
+                TipoTicket: "Cédula",
+                Trabajador: trabajadorRUT[0].id,
+                Dia: nombreDia,
+                Rut: rutFormateado
+              });
+              setIsModalComidaOpen(!isModalComidaOpen);
+            } else {
             addDoc(collection(firestore, "Ticket"), {
               Casino: email,
               Empresa: usuario.Empresa,
@@ -237,13 +273,14 @@ const Scanner = ({ route }) => {
             });
             setIsModalOpen(!isModalOpen);
           }
+          }
         } else {
           Alert.alert("Error", "Usuario deshabilitado");
         }
       } else {
         Alert.alert("Error", "Usuario de otra empresa");
       }
-    }else if (tipoT == "Colacion") {
+    } else if (tipoT == "Colacion") {
       try {
         const docuRef = doc(firestore, `Users/${emailTrabajador}`);
         const consulta = await getDoc(docuRef);
@@ -265,7 +302,8 @@ const Scanner = ({ route }) => {
             let ticketTrabajadorHoy = trabajadorTicket.filter(
               (objeto) =>
                 objeto.Trabajador === emailTrabajador &&
-                objeto.Fecha === fechaActual && objeto.TipoTicket === "Colacion"
+                objeto.Fecha === fechaActual &&
+                objeto.TipoTicket === "Colacion"
             );
             if (ticketTrabajadorHoy != "") {
               Alert.alert("Error", "Ticket de colacion ya utilizado");
@@ -347,6 +385,12 @@ const Scanner = ({ route }) => {
         trabajador={trabajadorActual}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
+      />
+      <ModalComida
+        isModalComidaOpen={isModalComidaOpen}
+        setIsModalComidaOpen={setIsModalComidaOpen}
+        comidaMes={comidaMes}
+        datosModal={datosModal}
       />
     </>
   );
