@@ -40,13 +40,19 @@ const FormikImputValue = ({ name, ...props }) => {
   const [field, meta, helpers] = useField(name);
   return (
     <>
-      <TextInput
-        style={tw`flex-auto p-10px pl-15px mx-2 w-40 h-45px mt-2 border border-solid border-gray-300 rounded-[14px] bg-white`}
+{meta.error?
+      (<TextInput
+        style={tw`flex-auto p-10px pl-15px mx-2 w-40 h-45px mt-2 border border-solid border-red-800 rounded-[14px] bg-red-100`}
         value={field.value}
         onChangeText={(value) => helpers.setValue(value)}
         {...props}
-      />
-      {meta.error && <Text style={tw`text-white`}> {meta.error}</Text>}
+      />):(<TextInput
+        style={tw`flex-auto p-10px pl-15px mx-2 w-40 h-45px mt-2 border border-solid border-gray-800 rounded-[14px] bg-white`}
+        value={field.value}
+        onChangeText={(value) => helpers.setValue(value)}
+        {...props}
+      />)
+      }
     </>
   );
 };
@@ -149,16 +155,16 @@ const VerMovimientos = ({ route }) => {
           <></>
         )}
         {isFiltro? (
-          <View style={tw`flex  mb-2 justify-center items-center text-gray-100 bg-gray-400 border border-gray-200 shadow-xl rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white`}>
-          <Text style={tw`text-gray-100`}>
+          <View style={tw`flex  mb-2 px-2 justify-center items-center text-gray-100 bg-gray-400 border border-gray-200 shadow-xl rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white`}>
+          <Text style={tw`text-gray-100 mt-2`}>
             Se encontraron {trabajadorMovimiento.length} movimientos que satisfacen el filtro.
           </Text>
           <TouchableOpacity
             onPress={() => {onRefresh(); setIsFiltro(!isFiltro)}}
-            style={tw`flex-row  w-90 justify-center items-center text-sm font-medium `}
+            style={tw`flex-row my-2 w-40 justify-center items-center text-sm font-medium bg-gray-600 rounded-lg`}
           >
             <Text
-              style={tw`uppercase p-2 mr-2 text-sm font-bold tracking-tight text-gray-100 dark:text-white`}
+              style={tw`uppercase p-2 text-sm font-bold tracking-tight text-gray-100 dark:text-white`}
             >
               Quitar filtro
             </Text>
@@ -179,7 +185,7 @@ const VerMovimientos = ({ route }) => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          {trabajadorMovimiento != "" ? (
+          {trabajadorMovimiento != ""? (
             trabajadorMovimiento.map((ticket, index) => (
               <View
                 key={index}
@@ -253,10 +259,12 @@ const VerMovimientos = ({ route }) => {
                       <FormikImputValue
                         placeholder="Fecha inicio"
                         name="fechaInicio"
+                        keyboardType="numeric"
                       />
                       <FormikImputValue
                         placeholder="Fecha final"
                         name="fechaFin"
+                        keyboardType="numeric"
                       />
                     </View>
                     <ButtonGradient text={"Filtrar"} onPress={handleSubmit} />
