@@ -14,6 +14,7 @@ const Comida = ({ route }) => {
   async function getComidasMes(rutEmpresa, resultado, dia) {
     const docuRef = doc(firestore, `FoodSemanal/${rutEmpresa}`);
     const consulta = await getDoc(docuRef);
+    
     if (consulta.exists()) {
       //si existen datos
       if (resultado % 4 == 1) {
@@ -32,11 +33,13 @@ const Comida = ({ route }) => {
   var numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
   var result = Math.ceil((currentdate.getDay() + 1 + numberOfDays) / 7);
   useEffect(() => {
-    getComidasMes(usuario.Empresa, result, currentdate);
+    getComidasMes(usuario.Empresa, (result
+      + 1), currentdate);
   }, []);
   const onRefresh = () => {
     setRefreshing(true);
-    getComidasMes(usuario.Empresa, result, currentdate);
+    getComidasMes(usuario.Empresa, (result
+      + 1), currentdate);
     setRefreshing(false);
   };
   var count = 0;

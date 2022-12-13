@@ -98,11 +98,13 @@ const QrCode = ({ route }) => {
   }
   var count = 0;
   useEffect(() => {
-    getComidasMes(usuario.Empresa,result,dia);
+    getComidasMes(usuario.Empresa,(result
+      + 1),dia);
   }, []);
   const onRefresh = () => {
     setRefreshing(true);
-    getComidasMes(usuario.Empresa,result,dia);
+    getComidasMes(usuario.Empresa,(result
+      + 1),dia);
     setRefreshing(false);
   };
 
