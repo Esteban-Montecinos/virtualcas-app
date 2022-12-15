@@ -35,10 +35,10 @@ const Login = () => {
   return (
     <View style={tw`flex h-full justify-center bg-slate-100`}>
       <View style={tw`flex items-center justify-center`}>
-      <Image
-        style={tw`w-25 h-25 mb-2`}
-        source={require('../../images/vcas-logo-cuadrado.jpg')}
-      />
+        <Image
+          style={tw`w-25 h-25 mb-2`}
+          source={require("../../images/vcas-logo-cuadrado.jpg")}
+        />
         <Text
           style={tw`mb-2  text-base tracking-tight text-gray-500 dark:text-white`}
         >
@@ -48,50 +48,33 @@ const Login = () => {
           validationSchema={loginValidationSchema}
           initialValues={initialValues}
           onSubmit={(datos, { resetForm }) => {
-            async function login(datos) {
+            async function login(datos) { // Inicio de sesion con datos del usuario movil
               try {
-                const user = await signInWithEmailAndPassword(
-                  auth,
-                  datos.email,
-                  datos.password
-                );
-                const docuRef = doc(firestore, `Users/${datos.email}`);
-                const consulta = await getDoc(docuRef);
-                if (consulta.exists()) {
-                  //si existen datos
-                  const infoDocu = consulta.data();
+                await signInWithEmailAndPassword( auth, datos.email, datos.password); // Inicia sesion en firebase
+                const docuRef = doc(firestore, `Users/${datos.email}`); // Referencia del documento
+                const consulta = await getDoc(docuRef); // Obtencion del documento del usuario
+                if (consulta.exists()) { // Existe el documento
+                  
+                  const infoDocu = consulta.data(); // Si existen datos, se guarda la informacion
                   resetForm();
-                  if (infoDocu.Estado === "Habilitado") {
-                    if (infoDocu.Tipo === "Trabajador") {
+                  if (infoDocu.Estado === "Habilitado") { // Usuario habilitado
+                    if (infoDocu.Tipo === "Trabajador") { // Tipo de usuario Trabajador
                       setError("");
-                      navigation.navigate("Main", {
-                        usuario: infoDocu,
-                        email: datos.email,
-                      });
+                      navigation.navigate("Main", { usuario: infoDocu, email: datos.email }); // Redireccion a vista trabajador
                     } else if (infoDocu.Tipo === "Casino") {
                       setError("");
-                      navigation.navigate("MainCasino", {
-                        usuario: infoDocu,
-                        email: datos.email,
-                      });
-                    }else{
-                      setError("Intenta con otra cuenta.")
+                      navigation.navigate("MainCasino", { usuario: infoDocu, email: datos.email }); // Redireccion a vista casino
+                    } else {
+                      setError("Intenta con otra cuenta."); // Error tipo usuario
                     }
                   } else {
-                    setError("Tu cuenta se encuentra deshabilitada.")
+                    setError("Tu cuenta se encuentra deshabilitada."); // Error estado cuenta
                   }
                 }
-              } catch (error) {
-                //resetForm();
-                if (
-                  error ==
-                  "FirebaseError: Firebase: Error (auth/wrong-password)."
-                ) {
+              } catch (error) { // Error firebase
+                if (error == "FirebaseError: Firebase: Error (auth/wrong-password).") { // Error contraseña
                   setError("Contraseña incorrecta.");
-                } else if (
-                  error ==
-                  "FirebaseError: Firebase: Error (auth/user-not-found)."
-                ) {
+                } else if ( error == "FirebaseError: Firebase: Error (auth/user-not-found).") { // Error usuario no existe
                   setError("El correo ingresado no existe.");
                 }
               }
@@ -113,14 +96,20 @@ const Login = () => {
                   name="password"
                   secureTextEntry={true}
                 />
-                {error? <Text style={tw`text-red-500`}>{error}</Text>:null}
+                {error ? <Text style={tw`text-red-500`}>{error}</Text> : null}
                 <ButtonGradient
                   text={"Iniciar sesión"}
                   onPress={handleSubmit}
                 />
                 <Text
                   style={tw`text-gray-500 mt-6`}
-                  onPress={() => navigation.navigate("Recover", {volver: "Login",email: null,usuario: null})}
+                  onPress={() =>
+                    navigation.navigate("Recover", {
+                      volver: "Login",
+                      email: null,
+                      usuario: null,
+                    })
+                  }
                 >
                   ¿Problemas con tu contraseña?{" "}
                   <Text style={tw`text-blue-600 font-bold`}>Recupérala.</Text>
