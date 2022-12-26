@@ -14,7 +14,6 @@ const Comida = ({ route }) => {
   async function getComidasMes(rutEmpresa, resultado, dia) {
     const docuRef = doc(firestore, `FoodSemanal/${rutEmpresa}`);
     const consulta = await getDoc(docuRef);
-    
     if (consulta.exists()) {
       //si existen datos
       if (resultado % 4 == 1) {
@@ -33,13 +32,12 @@ const Comida = ({ route }) => {
   var numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
   var result = Math.ceil((currentdate.getDay() + 1 + numberOfDays) / 7);
   useEffect(() => {
-    getComidasMes(usuario.Empresa, (result
-      + 1), currentdate);
+    getComidasMes(usuario.Empresa, result
+      , currentdate);
   }, []);
   const onRefresh = () => {
     setRefreshing(true);
-    getComidasMes(usuario.Empresa, (result
-      + 1), currentdate);
+    getComidasMes(usuario.Empresa, result, currentdate);
     setRefreshing(false);
   };
   var count = 0;
@@ -86,7 +84,7 @@ const Comida = ({ route }) => {
                 </View>
                 <View style={tw`flex`}>
                   {comidaMes.Lunes.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
+                    if (index >= 0 && index % 3 == 0) {
                       let i = index + 1;
                       return (
                         <View
@@ -112,7 +110,7 @@ const Comida = ({ route }) => {
                 </View>
                 <View style={tw`flex`}>
                   {comidaMes.Martes.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
+                    if (index >= 0 && index % 3 == 0) {
                       let i = index + 1;
                       return (
                         <View
@@ -138,7 +136,7 @@ const Comida = ({ route }) => {
                 </View>
                 <View style={tw`flex`}>
                   {comidaMes.Miercoles.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
+                    if (index >= 0 && index % 3 == 0) {
                       let i = index + 1;
                       return (
                         <View
@@ -164,7 +162,7 @@ const Comida = ({ route }) => {
                 </View>
                 <View style={tw`flex`}>
                   {comidaMes.Jueves.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
+                    if (index >= 0 && index % 3 == 0) {
                       let i = index + 1;
                       return (
                         <View
@@ -190,7 +188,7 @@ const Comida = ({ route }) => {
                 </View>
                 <View style={tw`flex`}>
                   {comidaMes.Viernes.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
+                    if (index >= 0 && index % 3 == 0) {
                       let i = index + 1;
                       return (
                         <View
@@ -216,7 +214,7 @@ const Comida = ({ route }) => {
                 </View>
                 <View style={tw`flex`}>
                   {comidaMes.Sabado.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
+                    if (index >= 0 && index % 3 == 0) {
                       let i = index + 1;
                       return (
                         <View
@@ -242,7 +240,7 @@ const Comida = ({ route }) => {
                 </View>
                 <View style={tw`flex`}>
                   {comidaMes.Domingo.map((Comida, index) => {
-                    if (index >= 0 && index % 2 == 0) {
+                    if (index >= 0 && index % 3 == 0) {
                       let i = index + 1;
                       return (
                         <View

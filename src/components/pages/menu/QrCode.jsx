@@ -98,13 +98,13 @@ const QrCode = ({ route }) => {
   }
   var count = 0;
   useEffect(() => {
-    getComidasMes(usuario.Empresa,(result
-      + 1),dia);
+    getComidasMes(usuario.Empresa,result
+      ,dia);
   }, []);
   const onRefresh = () => {
     setRefreshing(true);
-    getComidasMes(usuario.Empresa,(result
-      + 1),dia);
+    getComidasMes(usuario.Empresa,result
+      ,dia);
     setRefreshing(false);
   };
 
@@ -156,7 +156,7 @@ const QrCode = ({ route }) => {
                   La comida de hoy es:
                 </Text>
                 {comidaMes?.map((Comida, index) => {
-                  if (index >= 0 && index % 2 == 0) {
+                  if (index >= 0 && index % 3 == 0) {
                     let i = index + 1;
                     return (
                       <Text key={count++} style={tw`font-normal text-lg`}>
