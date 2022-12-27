@@ -39,7 +39,7 @@ const ModalComida = ({
                 {datosModal.Trabajador}
               </Text>
             {comidaMes.map((Comida, index) => {
-              if (index >= 0 && index % 2 == 0) {
+              if (index >= 0 && index % 3 == 0) {
                 let i = index + 1;
                 return (
                   <ButtonGradient

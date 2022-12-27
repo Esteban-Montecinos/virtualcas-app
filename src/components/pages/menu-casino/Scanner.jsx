@@ -174,7 +174,7 @@ const Scanner = ({ route }) => {
             if (ticketTrabajadorHoy != "") {
               Alert.alert("Error", "Ticket ya utilizado");
             } else {
-              if (comidaMes.length > 2) {
+              if (comidaMes.length > 3) {
                 
                 setDatosModal({
                   Casino: email,
@@ -200,7 +200,7 @@ const Scanner = ({ route }) => {
                   TipoTicket: tipoT,
                   Trabajador: emailTrabajador,
                   Dia: nombreDia,
-                  Comida: comidaMes,
+                  Comida: [comidaMes[0],comidaMes[1]],
                 });
                 setIsModalOpen(!isModalOpen);
               }
@@ -243,7 +243,7 @@ const Scanner = ({ route }) => {
           if (ticketTrabajadorHoy != "") {
             Alert.alert("Error", "Ticket ya utilizado");
           } else {
-            if (comidaMes.length > 2) {
+            if (comidaMes.length > 3) {
                 
               setDatosModal({
                 Casino: email,
@@ -269,7 +269,7 @@ const Scanner = ({ route }) => {
               TipoTicket: "Cédula",
               Trabajador: trabajadorRUT[0].id,
               Dia: nombreDia,
-              Comida: comidaMes,
+              Comida: [comidaMes[0],comidaMes[1]],
             });
             setIsModalOpen(!isModalOpen);
           }
